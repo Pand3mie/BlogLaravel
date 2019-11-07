@@ -28,3 +28,5 @@ Route::get('/jeux', 'JeuxController@index')->name('game_list');
 Route::get('importExportView', 'ExcelController@importExportView');
 Route::get('export', 'ExcelController@export')->name('export');
 Route::post('import', 'ExcelController@import')->name('import');
+Route::get('jeux/delete/{id}', ['as' => 'jeux.delete', 'uses' => 'JeuxController@destroy']);
+Route::get('jeux/details/{id}', ['as' => 'jeux.show', 'uses' => 'JeuxController@show']);

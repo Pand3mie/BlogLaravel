@@ -48,19 +48,15 @@
                                 <td>{{ $gameList->duree_min }}
                                     -
                                     {{ $gameList->duree_max }}</td>
-                                <td>{{ $gameList->age }} ans et +</td>
-                                <td>
-                                    <a class="tooltipped" data-position="bottom" data-tooltip="Zoom sur {{ $gameList->nom }}" href="">
+                                <td width="120px">{{ $gameList->age }} ans et +</td>
+                                <td width="120px">
+                                    <a class="tooltipped" data-position="bottom" data-tooltip="Zoom sur {{ $gameList->nom }}" href="{{ route('jeux.show', $gameList->id) }}">
                                         <i class="material-icons">zoom_in</i>
                                     </a>
-                                    <form action="{{ url('/jeux', ['id' => $gameList->id]) }}" method="POST" id="form_delete_jeux">
-                                        @method('DELETE')
-                                        @csrf
-                                            <a class="tooltipped delete_jeux" data-position="bottom" data-tooltip="Supprimer {{ $gameList->nom }}">
-                                                <i class="material-icons">delete</i>
-                                            </a>
-                                    </form>
-                                    <a class="tooltipped ajouter_collection" type="btn"data-id="{{ $gameList->id }}" data-position="bottom" data-tooltip="Ajouter {{ $gameList->nom }} à ma collection">
+                                    <a class="tooltipped delete_jeux" onclick="return confirm('Confirmer la suppression ?')" data-position="bottom" data-tooltip="Supprimer {{ $gameList->nom }}" href="{{ route('jeux.delete', $gameList->id) }}">
+                                        <i class="material-icons">delete</i>
+                                    </a>
+                                    <a class="tooltipped ajouter_collection" data-id="{{ $gameList->id }}" data-position="bottom" data-tooltip="Ajouter {{ $gameList->nom }} à ma collection" href="#">
                                         <i class="material-icons">add</i>
                                     </a>
                                 </td>
@@ -82,15 +78,7 @@
     </div>
     <script>
         $(document).ready(function () {
-
-            $('.delete_jeux').on('click', function(e){
-                e.preventDefault(e);
-                if( confirm('Confirmer la suppression ?')) {
-                    $('#form_delete_jeux').submit();
-   }
-            })
             $('.tooltipped').tooltip();
-
             $('.ajouter_collection').each(function() {
                 $(this).on('click', function (event) {
                     event.preventDefault();

@@ -19,6 +19,7 @@ class JeuxController extends Controller
             ->leftjoin('image AS i', 'j.image_id', '=', 'i.id')
             ->leftjoin('genre AS G', 'j.genre_id', '=', 'g.id')
             ->select('j.*','g.nom as genre', 'i.lien') 
+            ->where('deleted_at', null)
             ->get();
         return view('jeux.index', compact('gameLists'));
     }
@@ -41,7 +42,7 @@ class JeuxController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
     }
 
     /**
@@ -52,7 +53,13 @@ class JeuxController extends Controller
      */
     public function show($id)
     {
-        //
+        $game = DB::table('jeux AS j')
+        ->leftjoin('image AS i', 'j.image_id', '=', 'i.id')
+        ->leftjoin('genre AS G', 'j.genre_id', '=', 'g.id')
+        ->select('j.*','g.nom as genre', 'i.lien') 
+        ->where('j.id', $id)
+        ->get();
+        return view('jeux.details')->with(['game'=>$game]);
     }
 
     /**
@@ -86,7 +93,6 @@ class JeuxController extends Controller
      */
     public function destroy($id)
     {
-        dd($id);
         Jeux::destroy($id);
         return redirect('/jeux');
     }
