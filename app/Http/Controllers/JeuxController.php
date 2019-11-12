@@ -8,6 +8,10 @@ use Illuminate\Support\Facades\DB;
 
 class JeuxController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -31,7 +35,7 @@ class JeuxController extends Controller
      */
     public function create()
     {
-        //
+        return view('jeux.create');
     }
 
     /**
@@ -56,7 +60,8 @@ class JeuxController extends Controller
         $game = DB::table('jeux AS j')
         ->leftjoin('image AS i', 'j.image_id', '=', 'i.id')
         ->leftjoin('genre AS G', 'j.genre_id', '=', 'g.id')
-        ->select('j.*','g.nom as genre', 'i.lien') 
+        ->leftJoin('pays AS P', 'j.nationalite_id', '=', 'P.id' )
+        ->select('j.*','g.nom as genre', 'i.lien', 'P.nom_fr_fr') 
         ->where('j.id', $id)
         ->get();
         return view('jeux.details')->with(['game'=>$game]);

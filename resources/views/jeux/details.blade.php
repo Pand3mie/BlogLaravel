@@ -1,7 +1,8 @@
 @extends('layout.app')
 @section('content')
 
-    <div class="demo-blog mdl-layout mdl-js-layout has-drawer is-upgraded">
+@if (count($game))
+        <div class="demo-blog mdl-layout mdl-js-layout has-drawer is-upgraded">
         <main class="mdl-layout__content">
             <div class="demo-blog__posts mdl-grid">
                 <div class="mdl-card mdl-cell mdl-cell--12-col z-depth-3">
@@ -26,16 +27,16 @@
                         <table class="table fiche_jeux">
                             <tbody>
                                 <td>
-                                    @if ($game[0]->lien == null)
-                                        Aucune image disponible
-                                    @else
-                                        <img src="{{ asset('uploads/images/') }}/$game[0]->lien" width="300px" height="400px"/>
-                                    @endif
+                                    @if (!$game[0]->lien)
+                                    <img src="{{ asset('images/aucune-image-disponible.png') }}" width="100px" height="100px"/>
+                                @else 
+                                   <img src="{{ asset('images').'/'.$game[0]->lien }}" width="300px" height="400px"/>
+                                @endif
                                 </td>
                                 <td>
                                     @if ($game[0]->video)
                                     <div class="video-container responsive-video">
-                                        <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/{{ $game[0]->video }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                        <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/{{ substr($game[0]->video,32,43) }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                                     </div>
                                     @endif
                                 </td>
@@ -50,9 +51,9 @@
                             </tr>
                             <tr>
                                 <th>Nombre de joueur</th>
-                                <td>{{ $game[0]->nbreJoueurMin }}
+                                <td>{{ $game[0]->nbre_joueur_min }}
                                     -
-                                    {{ $game[0]->nbreJoueurMax }}</td>
+                                    {{ $game[0]->nbre_joueur_max }}</td>
                             </tr>
                             <tr>
                                 <th>Age</th>
@@ -67,14 +68,14 @@
                         </tr>
                         <tr>
                             <th>Durée</th>
-                            <td>{{ $game[0]->dureeMin }}
+                            <td>{{ $game[0]->duree_min }}
                                 -
-                                {{ $game[0]->dureeMax }}
+                                {{ $game[0]->duree_max }}
                                 min</td>
                         </tr>
                         <tr>
                             <th>Nationalite</th>
-                            <td>{{ $game[0]->nationalite }}</td>
+                            <td>{{ $game[0]->nom_fr_fr }}</td>
                         </tr>
                         <tr>
                             <th>Lien vidéo</th>
@@ -88,7 +89,7 @@
                 <br>
                 <div class="row">
                     <div class="col s12 left">
-                        <a href="{{ route('jeux') }}">
+                        <a href="{{ route('game_list') }}">
                             <i class="medium material-icons">arrow_back</i>
                         </a>
                     </div>
@@ -107,4 +108,5 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     });
 </script>
+@endif
 @stop

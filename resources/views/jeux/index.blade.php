@@ -9,7 +9,7 @@
                         <h3>
                             <a href="{{ route('game_list') }}">Liste des jeux</a>
                         </h3>
-                        <a href="#" class="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--fab mdl-color--accent" style="
+                        <a href="{{ route('addGame') }}" class="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--fab mdl-color--accent" style="
                                                                                               position: relative;
                                                                                               top: 15px;
                                                                                               right: -300px">
@@ -70,7 +70,7 @@
                         </tbody>
                     </table>
                 </div>
-                <a href="#" class="btn-floating btn-small waves-effect waves-light orange">
+                <a href="{{ route('dashboard') }}" class="btn-floating btn-small waves-effect waves-light orange">
                     <i class="material-icons">arrow_back</i>
                 </a>
             </div>
